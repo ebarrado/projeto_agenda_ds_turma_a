@@ -91,7 +91,9 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
                         decoration: InputDecoration(
                           labelText: 'URL da Imagem',
                         ),
-                      )
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(onPressed: () {}, child: Text('Cadastrar'))
                     ],
                   ),
                 ),
