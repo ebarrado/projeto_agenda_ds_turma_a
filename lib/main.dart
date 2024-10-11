@@ -1,4 +1,6 @@
 // main.dart
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -41,6 +43,18 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
         'data': data,
         'imagem': imagem
       });
+    });
+  }
+
+  void _editarAtividade(
+      int index, String tipo, String descricao, String data, String imagem) {
+    setState(() {
+      _atividades[index] = {
+        'tipo': tipo,
+        'descricao': descricao,
+        'data': data,
+        'image': imagem
+      };
     });
   }
 
@@ -123,6 +137,86 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
         });
   }
 
+  //CRIANDO MODAL EDITAR
+
+  void modalEditar(BuildContext context, index) {
+    final TextEditingController tipoController = TextEditingController();
+    final TextEditingController descricaoController = TextEditingController();
+    final TextEditingController dataController = TextEditingController();
+    final TextEditingController imagemController = TextEditingController();
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Cadastrar Atividade",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: Icon(Icons.close))
+                        ],
+                      ),
+                      //ADICIONAR O FORMULARIO
+                      TextField(
+                        controller: tipoController,
+                        decoration: InputDecoration(
+                          labelText: 'Tipo de Atividade',
+                        ),
+                      ),
+                      TextField(
+                        controller: descricaoController,
+                        decoration: InputDecoration(
+                          labelText: 'Descrição',
+                        ),
+                      ),
+                      TextField(
+                        controller: dataController,
+                        decoration: InputDecoration(
+                          labelText: 'Data',
+                        ),
+                      ),
+                      TextField(
+                        controller: imagemController,
+                        decoration: InputDecoration(
+                          labelText: 'URL da Imagem',
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                          onPressed: () {
+                            _editarAtividade(
+                                index,
+                                tipoController.text,
+                                descricaoController.text,
+                                dataController.text,
+                                imagemController.text);
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Atualizar'))
+                    ],
+                  ),
+                ),
+              ));
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,7 +237,10 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
         itemCount: _atividades.length,
         itemBuilder: (context, index) {
           return Atividade(
-              _atividades[index]['tipo']!, _atividades[index]['imagem']!);
+            _atividades[index]['tipo']!,
+            _atividades[index]['imagem']!,
+            () => modalEditar(context, index),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -160,8 +257,10 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
 class Atividade extends StatelessWidget {
   final String nome; //variavel nome Atividade
   final String imagem_Atv;
+  final VoidCallback onEdit;
 
-  const Atividade(this.nome, this.imagem_Atv, {Key? key}) : super(key: key);
+  const Atividade(this.nome, this.imagem_Atv, this.onEdit, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +288,7 @@ class Atividade extends StatelessWidget {
                   ),
                   Text(nome),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: onEdit,
                     child: Icon(Icons.edit),
                   )
                 ],
