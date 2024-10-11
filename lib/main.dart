@@ -139,18 +139,12 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
         backgroundColor: Color.fromARGB(255, 134, 3, 10),
       ),
       backgroundColor: Color.fromARGB(255, 243, 239, 240),
-      body: ListView(
-        //scrollDirection: Axis.horizontal,
-        children: [
-          Atividade('Atividade 1',
-              'https://storage.googleapis.com/cms-storage-bucket/780e0e64d323aad2cdd5.png'),
-          Atividade('Atividade 2',
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQexxwaG6qMQt_I6TW_ezMQu3suyMWQPKmNgQ&s'),
-          Atividade('Atividade 3',
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn7XprTV9T6eic0nFpkS4RziT8pOa2nbJ2jw&s'),
-          Atividade('Atividade 4',
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_uLYwsfqtf-Ax5N48y1w3J7IA07XxU-eGVA&s')
-        ],
+      body: ListView.builder(
+        itemCount: _atividades.length,
+        itemBuilder: (context, index) {
+          return Atividade(
+              _atividades[index]['tipo']!, _atividades[index]['imagem']!);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
