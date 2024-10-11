@@ -31,6 +31,19 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
   //variavel do tipo final
   final List<Map<String, String>> _atividades = [];
 
+  //método adicionar atividade - metodo tem parametros
+  void _adicionarAtividades(
+      String tipo, String descricao, String data, String imagem) {
+    setState(() {
+      _atividades.add({
+        'tipo': tipo,
+        'descricao': descricao,
+        'data': data,
+        'imagem': imagem
+      });
+    });
+  }
+
   //MÉTODO CADASTRAR MODAL
   //Método do Botão
   void modalCadastrar(BuildContext context) {
@@ -93,7 +106,16 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(onPressed: () {}, child: Text('Cadastrar'))
+                      ElevatedButton(
+                          onPressed: () {
+                            _adicionarAtividades(
+                                tipoController.text,
+                                descricaoController.text,
+                                dataController.text,
+                                imagemController.text);
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Cadastrar'))
                     ],
                   ),
                 ),
