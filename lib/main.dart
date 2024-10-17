@@ -138,12 +138,16 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
   }
 
   //CRIANDO MODAL EDITAR
-
-  void modalEditar(BuildContext context, index) {
-    final TextEditingController tipoController = TextEditingController();
-    final TextEditingController descricaoController = TextEditingController();
-    final TextEditingController dataController = TextEditingController();
-    final TextEditingController imagemController = TextEditingController();
+  //tipo parametro inteiro
+  void modalEditar(BuildContext context, int index) {
+    final TextEditingController tipoController =
+        TextEditingController(text:_atividades[index]['tipo']);
+    final TextEditingController descricaoController = 
+        TextEditingController(text:_atividades[index]['descricao']);
+    final TextEditingController dataController = 
+        TextEditingController(text:_atividades[index]['data']);
+    final TextEditingController imagemController = 
+        TextEditingController(text:_atividades[index]['imagem']);
 
     showDialog(
         context: context,
