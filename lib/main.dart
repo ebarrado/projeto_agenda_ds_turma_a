@@ -44,6 +44,9 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
         'imagem': imagem
       });
     });
+    //
+  }
+
   //correção do parametro imagem
   void _editarAtividade(
       int index, String tipo, String descricao, String data, String imagem) {
