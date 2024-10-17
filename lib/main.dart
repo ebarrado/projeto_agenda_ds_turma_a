@@ -60,6 +60,32 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
     });
   }
 
+  //MÉTODO EXCLUIR ATIVIDADE
+  void _excluirAtividade(int index) {
+    setState(() {
+      _atividades.remove(index);
+    });
+  }
+
+//MODAL PARA CONFIRMAÇÃO DE EXCLUSÃO
+  void _confirmarExclusao(BuildContext context, int index) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirmar'),
+            content: Text('Tem certeza que deseja excluir esta atividade?'),
+            actions: [
+              TextButton(
+                  child: Text('Cancelar'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          );
+        });
+  }
+
   //MÉTODO CADASTRAR MODAL
   //Método do Botão
   void modalCadastrar(BuildContext context) {
@@ -246,6 +272,7 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
             _atividades[index]['tipo']!,
             _atividades[index]['imagem']!,
             () => modalEditar(context, index),
+            () => _confirmarExclusao(context, index),
           );
         },
       ),
@@ -264,8 +291,11 @@ class Atividade extends StatelessWidget {
   final String nome; //variavel nome Atividade
   final String imagem_Atv;
   final VoidCallback onEdit;
+  //CRIANDO VARIAVEL PARA EXCLUIR ATIVIDADE
+  final VoidCallback onDelete;
 
-  const Atividade(this.nome, this.imagem_Atv, this.onEdit, {Key? key})
+  const Atividade(this.nome, this.imagem_Atv, this.onEdit, this.onDelete,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -295,8 +325,14 @@ class Atividade extends StatelessWidget {
                   Text(nome),
                   ElevatedButton(
                     onPressed: onEdit,
-                    child: Icon(Icons.edit),
-                  )
+                    child: Icon(Icons.edit, color: Colors.green),
+                  ),
+                  ElevatedButton(
+                      onPressed: onDelete,
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ))
                 ],
               ),
             )
