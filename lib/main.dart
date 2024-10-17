@@ -44,8 +44,7 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
         'imagem': imagem
       });
     });
-  }
-
+  //correção do parametro imagem
   void _editarAtividade(
       int index, String tipo, String descricao, String data, String imagem) {
     setState(() {
@@ -53,7 +52,7 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
         'tipo': tipo,
         'descricao': descricao,
         'data': data,
-        'image': imagem
+        'imagem': imagem
       };
     });
   }
@@ -141,13 +140,13 @@ class _PaginaAgendaState extends State<PaginaAgenda> {
   //tipo parametro inteiro
   void modalEditar(BuildContext context, int index) {
     final TextEditingController tipoController =
-        TextEditingController(text:_atividades[index]['tipo']);
-    final TextEditingController descricaoController = 
-        TextEditingController(text:_atividades[index]['descricao']);
-    final TextEditingController dataController = 
-        TextEditingController(text:_atividades[index]['data']);
-    final TextEditingController imagemController = 
-        TextEditingController(text:_atividades[index]['imagem']);
+        TextEditingController(text: _atividades[index]['tipo']);
+    final TextEditingController descricaoController =
+        TextEditingController(text: _atividades[index]['descricao']);
+    final TextEditingController dataController =
+        TextEditingController(text: _atividades[index]['data']);
+    final TextEditingController imagemController =
+        TextEditingController(text: _atividades[index]['imagem']);
 
     showDialog(
         context: context,
